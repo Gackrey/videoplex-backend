@@ -112,7 +112,7 @@ router
     let { user } = req;
     const history_id = req.body.id;
     const updatedHistory = user.history.filter(
-      (video) => video.id !== historyid
+      (video) => video.id !== history_id
     );
     user = extend(user, { history: updatedHistory });
 
