@@ -87,9 +87,8 @@ router.route("/:userID/updateuser").post(async (req, res) => {
   const savedUser = await NewUser.save();
   res.json({
     success: true,
-    username: savedUser.username,
-    email: savedUser.email,
-    password: savedUser.password,
+    id:savedUser._id,
+    icon: savedUser.username[0],
   });
 });
 
