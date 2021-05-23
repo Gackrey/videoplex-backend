@@ -1,3 +1,5 @@
+const { User } = require("../models/user.model");
+const { extend } = require("lodash");
 const postWatchLater = async (req, res) => {
   let { user } = req;
   const watchlater = req.body;

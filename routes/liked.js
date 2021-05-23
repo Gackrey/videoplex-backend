@@ -1,3 +1,5 @@
+const { User } = require("../models/user.model");
+const { extend } = require("lodash");
 const postLikedVideo = async (req, res) => {
   let { user } = req;
   const likedvideo = req.body;

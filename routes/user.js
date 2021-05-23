@@ -1,3 +1,5 @@
+const { User } = require("../models/user.model");
+const { extend } = require("lodash");
 const getUserbyId = async (req, res, next, id) => {
   try {
     const user = await User.findById(id);
