@@ -2,7 +2,8 @@ const express = require('express');
 const mongoose = require('mongoose');
 const cors = require('cors');
 const bodyParser = require('body-parser')
-const userRoute = require('./routes/user.router')
+const userRoute = require('./routes/router')
+const { notFound, errorOccered } = require("./errorHandlers");
 const app = express();
 app.use(bodyParser.json());
 app.use(cors());
@@ -15,14 +16,8 @@ app.get('/', (request, response) => {
 });
 
 app.use('/user',userRoute)
-app.use((req, res) => {
-  res.status(404).json({ success: false, message: "route not found on server, please check" })
-})
-
-app.use((err, req, res, next) => {
-  console.error(err.stack);
-  res.status(500).json({ success: false, message: "error occured, see the errMessage key for more details", errorMessage: err.message })
-})
+app.use(notFound)
+app.use(errorOccered)
 
 app.listen(PORT, () => {
   console.log('Server Started at port', PORT);
