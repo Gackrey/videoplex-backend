@@ -3,7 +3,8 @@ const mongoose = require('mongoose');
 const cors = require('cors');
 const bodyParser = require('body-parser')
 const userRoute = require('./routes/router')
-const { notFound, errorOccered } = require("./errorHandlers");
+const notFound = require('./errorHandlers/routeNotFound')
+const errorOccered = require('./errorHandlers/errorOccered')
 const app = express();
 app.use(bodyParser.json());
 app.use(cors());

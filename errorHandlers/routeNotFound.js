@@ -1,4 +1,4 @@
-export const notFound = (req, res) => {
+const notFound = (req, res) => {
   res
     .status(404)
     .json({
@@ -6,3 +6,5 @@ export const notFound = (req, res) => {
       message: "route not found on server, please check",
     });
 };
+
+module.exports = notFound

@@ -1,4 +1,4 @@
-export const errorOccered = (err, req, res, next) => {
+const errorOccered = (err, req, res, next) => {
   console.error(err.stack);
   res
     .status(500)
@@ -8,3 +8,5 @@ export const errorOccered = (err, req, res, next) => {
       errorMessage: err.message,
     });
 };
+
+module.exports = errorOccered
