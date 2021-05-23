@@ -1,4 +1,4 @@
-export const postLikedVideo = async (req, res) => {
+const postLikedVideo = async (req, res) => {
   let { user } = req;
   const likedvideo = req.body;
   user.liked.push(likedvideo);
@@ -6,7 +6,7 @@ export const postLikedVideo = async (req, res) => {
   res.json({ success: true });
 };
 
-export const deleteLikedVideo = async (req, res) => {
+const deleteLikedVideo = async (req, res) => {
   let { user } = req;
   const likedvideo_id = req.body.id;
   const updatedLiked = user.liked.filter((video) => video.id !== likedvideo_id);
@@ -16,3 +16,5 @@ export const deleteLikedVideo = async (req, res) => {
   const savedUser = await NewUser.save();
   res.json({ success: true });
 };
+
+module.exports = { postLikedVideo, deleteLikedVideo };

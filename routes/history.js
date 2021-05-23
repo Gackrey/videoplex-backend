@@ -1,4 +1,4 @@
-export const postHistory = async (req, res) => {
+const postHistory = async (req, res) => {
   let { user } = req;
   const historyvideo = req.body;
   const isAllreadyPresent = user.history.filter(
@@ -13,7 +13,7 @@ export const postHistory = async (req, res) => {
   res.json({ success: false });
 };
 
-export const deleteHistory = async (req, res) => {
+const deleteHistory = async (req, res) => {
   let { user } = req;
   const history_id = req.body.id;
   const updatedHistory = user.history.filter(
@@ -25,3 +25,5 @@ export const deleteHistory = async (req, res) => {
   const savedUser = await NewUser.save();
   res.json({ success: true });
 };
+
+module.exports = { postHistory, deleteHistory };

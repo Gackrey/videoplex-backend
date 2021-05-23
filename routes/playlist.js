@@ -1,4 +1,4 @@
-export const createNewPlaylist = async (req, res) => {
+const createNewPlaylist = async (req, res) => {
   let { user } = req;
   const playlistName = req.body.name;
   user.playlist[playlistName] = [];
@@ -8,7 +8,7 @@ export const createNewPlaylist = async (req, res) => {
   res.json({ success: true, savedUser });
 };
 
-export const deletePlaylist = async (req, res) => {
+const deletePlaylist = async (req, res) => {
   let { user } = req;
   const playlistName = req.body.name;
   delete user.playlist[playlistName];
@@ -18,7 +18,7 @@ export const deletePlaylist = async (req, res) => {
   res.json({ success: true, savedUser });
 };
 
-export const postUpdatePlaylist = async (req, res) => {
+const postUpdatePlaylist = async (req, res) => {
   let { user } = req;
   const { name, video } = req.body;
   user.playlist[name].push(video);
@@ -28,7 +28,7 @@ export const postUpdatePlaylist = async (req, res) => {
   res.json({ success: true, savedUser });
 };
 
-export const deleteUpdatePlaylist = async (req, res) => {
+const deleteUpdatePlaylist = async (req, res) => {
   let { user } = req;
   const { name, delvideo } = req.body;
   user.playlist[name] = user.playlist[name].filter(
@@ -38,4 +38,11 @@ export const deleteUpdatePlaylist = async (req, res) => {
   const NewUser = User(user);
   const savedUser = await NewUser.save();
   res.json({ success: true, savedUser });
+};
+
+module.exports = {
+  createNewPlaylist,
+  deletePlaylist,
+  postUpdatePlaylist,
+  deleteUpdatePlaylist,
 };

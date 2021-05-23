@@ -1,4 +1,4 @@
-export const getUserbyId = async (req, res, next, id) => {
+const getUserbyId = async (req, res, next, id) => {
   try {
     const user = await User.findById(id);
     if (!user)
@@ -15,7 +15,7 @@ export const getUserbyId = async (req, res, next, id) => {
   }
 };
 
-export const updateUser = async (req, res) => {
+const updateUser = async (req, res) => {
   let { user } = req;
   const newdata = req.body;
   const updatedUser = {
@@ -34,3 +34,5 @@ export const updateUser = async (req, res) => {
     icon: savedUser.username[0],
   });
 };
+
+module.exports = { getUserbyId, updateUser };

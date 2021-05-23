@@ -1,4 +1,4 @@
-export const postWatchLater = async (req, res) => {
+const postWatchLater = async (req, res) => {
   let { user } = req;
   const watchlater = req.body;
   user.watch_later.push(watchlater);
@@ -6,7 +6,7 @@ export const postWatchLater = async (req, res) => {
   res.json({ success: true });
 };
 
-export const deleteWatchLater = async (req, res) => {
+const deleteWatchLater = async (req, res) => {
   let { user } = req;
   const watch_later_id = req.body.id;
   const updatedLater = user.watch_later.filter(
@@ -18,3 +18,5 @@ export const deleteWatchLater = async (req, res) => {
   const savedUser = await NewUser.save();
   res.json({ success: true });
 };
+
+module.exports = { postWatchLater, deleteWatchLater };
