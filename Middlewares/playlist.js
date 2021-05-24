@@ -1,5 +1,4 @@
 const { User } = require("../models/user.model");
-const { extend } = require("lodash");
 const createNewPlaylist = async (req, res) => {
   let { user } = req;
   const playlistName = req.body.name;

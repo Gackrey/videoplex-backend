@@ -1,18 +1,17 @@
 const express = require("express");
 const router = express.Router();
 const { User } = require("../models/user.model");
-const { extend } = require("lodash");
-const { postLikedVideo, deleteLikedVideo } = require("./liked");
-const { postWatchLater, deleteWatchLater } = require("./watch-later");
-const { postHistory, deleteHistory } = require("./history");
+const { postLikedVideo, deleteLikedVideo } = require("../Middlewares/liked");
+const { postWatchLater, deleteWatchLater } = require("../Middlewares/watch-later");
+const { postHistory, deleteHistory } = require("../Middlewares/history");
 const {
   createNewPlaylist,
   deletePlaylist,
   postUpdatePlaylist,
   deleteUpdatePlaylist,
-} = require("./playlist");
+} = require("../Middlewares/playlist");
 
-const { getUserbyId, updateUser } = require("./user");
+const { getUserbyId, updateUser } = require("../Middlewares/user");
 router.route("/signup").post(async (req, res) => {
   try {
     const user = req.body;
