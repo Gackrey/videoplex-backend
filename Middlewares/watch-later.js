@@ -1,4 +1,3 @@
-const { User } = require("../models/user.model");
 const { extend } = require("lodash");
 const postWatchLater = async (req, res) => {
   let { user } = req;
@@ -15,9 +14,7 @@ const deleteWatchLater = async (req, res) => {
     (video) => video.id !== watch_later_id
   );
   user = extend(user, { watch_later: updatedLater });
-
-  const NewUser = User(user);
-  const savedUser = await NewUser.save();
+  await user.save()
   res.json({ success: true });
 };
 

@@ -25,15 +25,12 @@ const updateUser = async (req, res) => {
     email: newdata.email,
     password: newdata.password,
   };
-
   user = extend(user, updatedUser);
-
-  const NewUser = User(user);
-  const savedUser = await NewUser.save();
+  await user.save()
   res.json({
     success: true,
-    id: savedUser._id,
-    icon: savedUser.username[0],
+    id: user._id,
+    icon: user.username[0],
   });
 };
 

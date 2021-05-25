@@ -1,4 +1,3 @@
-const { User } = require("../models/user.model");
 const { extend } = require("lodash");
 const postHistory = async (req, res) => {
   let { user } = req;
@@ -22,9 +21,7 @@ const deleteHistory = async (req, res) => {
     (video) => video.id !== history_id
   );
   user = extend(user, { history: updatedHistory });
-
-  const NewUser = User(user);
-  const savedUser = await NewUser.save();
+  await user.save();
   res.json({ success: true });
 };
 
