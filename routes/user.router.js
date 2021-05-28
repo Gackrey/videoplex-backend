@@ -1,8 +1,12 @@
 const express = require("express");
 const router = express.Router();
-const { User } = require("../models/user.model");
+const { login } = require("../Middlewares/login");
+const { signup } = require("../Middlewares/signup");
 const { postLikedVideo, deleteLikedVideo } = require("../Middlewares/liked");
-const { postWatchLater, deleteWatchLater } = require("../Middlewares/watch-later");
+const {
+  postWatchLater,
+  deleteWatchLater,
+} = require("../Middlewares/watch-later");
 const { postHistory, deleteHistory } = require("../Middlewares/history");
 const {
   createNewPlaylist,
@@ -11,67 +15,38 @@ const {
   deleteUpdatePlaylist,
 } = require("../Middlewares/playlist");
 
-const { getUserbyId, updateUser } = require("../Middlewares/user");
-router.route("/signup").post(async (req, res) => {
-  try {
-    const user = req.body;
-    const NewUser = User(user);
-    const savedUser = await NewUser.save();
-    res.json({ success: true, id: savedUser._id, icon: savedUser.username[0] });
-  } catch (err) {
-    console.log(err);
-    res.status(500).json({
-      success: false,
-      message: "Unable to add users",
-      errorMessage: err.message,
-    });
-  }
-});
+const {
+  getUserbyId,
+  getUserDetails,
+  updateUser,
+} = require("../Middlewares/user");
+router.route("/signup").post(signup);
 
-router.route("/login").post((req, res) => {
-  const user = req.body;
-  try {
-    User.findOne(user, function (err, docs) {
-      if (docs === null) {
-        res
-          .status(500)
-          .json({ success: false, message: "Unable to find user" });
-      } else {
-        res.json({ success: true, id: docs._id, icon: docs.username[0] });
-      }
-    });
-  } catch (err) {
-    res.status(500).json({
-      success: false,
-      message: "Unable to find user",
-      errorMessage: err.message,
-    });
-  }
-});
+router.route("/login").post(login);
 
-router.param("userID", getUserbyId);
+router.route("/userDetails").get(getUserbyId, getUserDetails);
 
-router.route("/:userID").get((req, res) => {
-  const { user } = req;
-  user.__v = undefined;
-  res.json({ success: true, user });
-});
-
-router.route("/:userID/updateuser").post(updateUser);
-
-router.route("/:userID/history").post(postHistory).delete(deleteHistory);
-
-router.route("/:userID/liked").post(postLikedVideo).delete(deleteLikedVideo);
+router.route("/updateuser").post(getUserbyId, updateUser);
 
 router
-  .route("/:userID/watch-later")
-  .post(postWatchLater)
-  .delete(deleteWatchLater);
+  .route("/history")
+  .post(getUserbyId, postHistory)
+  .delete(getUserbyId, deleteHistory);
 
 router
-  .route("/:userID/newplaylist")
-  .post(createNewPlaylist)
-  .delete(deletePlaylist);
+  .route("/liked")
+  .post(getUserbyId, postLikedVideo)
+  .delete(getUserbyId, deleteLikedVideo);
+
+router
+  .route("watch-later")
+  .post(getUserbyId, postWatchLater)
+  .delete(getUserbyId, deleteWatchLater);
+
+router
+  .route("/newplaylist")
+  .post(getUserbyId, createNewPlaylist)
+  .delete(getUserbyId, deletePlaylist);
 
 router
   .route("/:userID/updateplaylist")
