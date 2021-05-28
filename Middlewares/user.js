@@ -2,7 +2,7 @@ const jwt = require("jsonwebtoken");
 require("dotenv").config();
 const { User } = require("../models/user.model");
 const { extend } = require("lodash");
-const getUserbyId = async (req, res, next, id) => {
+const getUserbyId = async (req, res, next) => {
   try {
     const token = req.headers.authorization;
     const decoded = jwt.verify(token, process.env.ACCESS_TOKEN_SECRET);
