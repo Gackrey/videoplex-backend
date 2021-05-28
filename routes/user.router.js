@@ -39,7 +39,7 @@ router
   .delete(getUserbyId, deleteLikedVideo);
 
 router
-  .route("watch-later")
+  .route("/watch-later")
   .post(getUserbyId, postWatchLater)
   .delete(getUserbyId, deleteWatchLater);
 
@@ -49,8 +49,8 @@ router
   .delete(getUserbyId, deletePlaylist);
 
 router
-  .route("/:userID/updateplaylist")
-  .post(postUpdatePlaylist)
-  .delete(deleteUpdatePlaylist);
+  .route("/updateplaylist")
+  .post(getUserbyId,postUpdatePlaylist)
+  .delete(getUserbyId,deleteUpdatePlaylist);
 
 module.exports = router;
