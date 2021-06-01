@@ -5,6 +5,7 @@ const bodyParser = require('body-parser')
 const userRoute = require('./routes/user.router')
 const notFound = require('./errorHandlers/routeNotFound')
 const errorOccered = require('./errorHandlers/errorOccered')
+require("dotenv").config();
 const app = express();
 app.use(bodyParser.json());
 app.use(cors());
