@@ -7,22 +7,34 @@ const postHistory = async (req, res) => {
   );
 
   if (isAllreadyPresent.length === 0) {
-    user.history.push(historyvideo);
-    await user.save();
-    res.json({ success: true });
+    try {
+      user.history.push(historyvideo);
+      await user.save();
+      res.json({ success: true });
+    } catch {
+      res
+        .status(500)
+        .json({ success: false, message: "Unable to add video to history" });
+    }
   }
   res.json({ success: false });
 };
 
 const deleteHistory = async (req, res) => {
-  let { user } = req;
-  const history_id = req.body.id;
-  const updatedHistory = user.history.filter(
-    (video) => video.id !== history_id
-  );
-  user = extend(user, { history: updatedHistory });
-  await user.save();
-  res.json({ success: true });
+  try {
+    let { user } = req;
+    const history_id = req.body.id;
+    const updatedHistory = user.history.filter(
+      (video) => video.id !== history_id
+    );
+    user = extend(user, { history: updatedHistory });
+    await user.save();
+    res.json({ success: true });
+  } catch {
+    res
+      .status(500)
+      .json({ success: false, message: "Unable to remove video from history" });
+  }
 };
 
 module.exports = { postHistory, deleteHistory };

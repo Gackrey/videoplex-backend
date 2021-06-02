@@ -8,7 +8,6 @@ const signup = async (req, res) => {
       const token = jwt.sign({ id: savedProduct._id },process.env.ACCESS_TOKEN_SECRET)
       res.json({ success: true, id: token, icon: savedUser.username[0] });
     } catch (err) {
-      console.log(err);
       res.status(500).json({
         success: false,
         message: "Unable to add users",
