@@ -24,7 +24,7 @@ const deletePlaylist = async (req, res) => {
     await user.save();
     res.json({ success: true, user });
   } catch (err) {
-    res.status(500).json({ success: false, message: err });
+    res.json({ success: false, message: err });
   }
 };
 
