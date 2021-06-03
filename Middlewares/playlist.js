@@ -16,17 +16,15 @@ const createNewPlaylist = async (req, res) => {
 const deletePlaylist = async (req, res) => {
   try {
     let { user } = req;
-    const playlistName = req.body.name;
+    const PLname = req.body.name;
     const updatedPlaylist = user.playlist.filter(
-      (list) => list.playlistName !== playlistName
+      (list) => list.playlistName !== PLname
     );
     user = extend(user, { playlist: updatedPlaylist });
     await user.save();
     res.json({ success: true, user });
-  } catch {
-    res
-      .status(500)
-      .json({ success: false, message: "Unable to delete playlist" });
+  } catch (err) {
+    res.status(500).json({ success: false, message: err });
   }
 };
 
