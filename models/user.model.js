@@ -22,12 +22,12 @@ const userSchema = new Schema({
   password: {
     type: String,
     require: [true, "password field is required"],
-    // validate: {
-    //   validator: function(v) {
-    //     return v.length > 6 && /\d+/.test(v)
-    //   },
-    //   message: props => `password must be 6 characters long and must contain a number`
-    // }
+    validate: {
+      validator: function(v) {
+        return v.length >= 6 && /\d+/.test(v)
+      },
+      message: () => `password must be 6 characters long and must contain a number`
+    }
   },
   history: {
     type: Array
@@ -38,9 +38,12 @@ const userSchema = new Schema({
   watch_later: {
     type: Array
   },
-  playlist: {
-    type: Object
-  }
+  playlist: [
+    {
+      playlistName: String,
+      playlistVideo: Array,
+    },
+  ],
 }, { timestamps: true })
 
 const User = mongoose.model("User", userSchema);

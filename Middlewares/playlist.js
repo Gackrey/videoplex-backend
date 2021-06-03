@@ -1,63 +1,75 @@
 const { User } = require("../models/user.model");
 const createNewPlaylist = async (req, res) => {
-  try{
+  try {
     let { user } = req;
     const playlistName = req.body.name;
-    user.playlist[playlistName] = [];
-  
-    const NewUser = User(user);
-    const savedUser = await NewUser.save();
-    res.json({ success: true, savedUser });
-  }
-  catch{
-    res.status(500).json({ success: false, message:"Unable to create new playlist" });
+    user.playlist.push({ playlistName, playlistVideo: [] });
+    await user.save();
+    res.json({ success: true, user });
+  } catch {
+    res
+      .status(500)
+      .json({ success: false, message: "Unable to create new playlist" });
   }
 };
 
 const deletePlaylist = async (req, res) => {
-  try{
+  try {
     let { user } = req;
     const playlistName = req.body.name;
-    delete user.playlist[playlistName];
-  
-    const NewUser = User(user);
-    const savedUser = await NewUser.save();
-    res.json({ success: true, savedUser });
-  }
-  catch{
-    res.status(500).json({ success: false, message:"Unable to delete playlist" });
+    const updatedPlaylist = user.playlist.filter(
+      (list) => list.playlistName !== playlistName
+    );
+    user = extend(user, { playlist: updatedPlaylist });
+    await user.save();
+    res.json({ success: true, user });
+  } catch {
+    res
+      .status(500)
+      .json({ success: false, message: "Unable to delete playlist" });
   }
 };
 
 const postUpdatePlaylist = async (req, res) => {
-  try{
+  try {
     let { user } = req;
     const { name, video } = req.body;
-    user.playlist[name].push(video);
-  
-    const NewUser = User(user);
-    const savedUser = await NewUser.save();
-    res.json({ success: true, savedUser });
-  }
-  catch{
-    res.status(500).json({ success: false, message:"Unable to add video to playlist" });
+    const selectedPlaylist = user.playlist.find(
+      (list) => list.playlistName === name
+    );
+    selectedPlaylist.playlistVideo = [...selectedPlaylist.playlistVideo, video];
+    await User.updateOne(
+      { "playlist._id": selectedPlaylist._id },
+      { $set: { "playlist.$.playlistVideo": selectedPlaylist.playlistVideo } }
+    );
+    res.json({ success: true });
+  } catch {
+    res
+      .status(500)
+      .json({ success: false, message: "Unable to add video to playlist" });
   }
 };
 
 const deleteUpdatePlaylist = async (req, res) => {
-  try{
+  try {
     let { user } = req;
     const { name, delvideo } = req.body;
-    user.playlist[name] = user.playlist[name].filter(
-      (video) => video.id !== delvideo.id
+    const selectedPlaylist = user.playlist.find(
+      (list) => list.playlistName === name
     );
-  
-    const NewUser = User(user);
-    const savedUser = await NewUser.save();
-    res.json({ success: true, savedUser });
-  }
-  catch{
-    res.status(500).json({ success: false, message:"Unable to delete video from playlist" });
+    const filterArray = selectedPlaylist.playlistVideo.filter(
+      (item) => item.id !== delvideo.id
+    );
+    await User.updateOne(
+      { "playlist._id": selectedPlaylist._id },
+      { $set: { "playlist.$.playlistVideo": filterArray } }
+    );
+    res.json({ success: true });
+  } catch {
+    res.status(500).json({
+      success: false,
+      message: "Unable to delete video from playlist",
+    });
   }
 };
 
