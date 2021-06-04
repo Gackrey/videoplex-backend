@@ -5,7 +5,7 @@ const signup = async (req, res) => {
       const user = req.body;
       const NewUser = User(user);
       const savedUser = await NewUser.save();
-      const token = jwt.sign({ id: savedProduct._id },process.env.ACCESS_TOKEN_SECRET)
+      const token = jwt.sign({ id: savedUser._id },process.env.ACCESS_TOKEN_SECRET)
       res.json({ success: true, id: token, icon: savedUser.username[0] });
     } catch (err) {
       res.status(500).json({

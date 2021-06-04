@@ -1,25 +1,25 @@
 const express = require("express");
 const router = express.Router();
-const { login } = require("../Middlewares/login");
-const { signup } = require("../Middlewares/signup");
-const { postLikedVideo, deleteLikedVideo } = require("../Middlewares/liked");
+const { login } = require("../Controllers/login");
+const { signup } = require("../Controllers/signup");
+const { postLikedVideo, deleteLikedVideo } = require("../Controllers/liked");
 const {
   postWatchLater,
   deleteWatchLater,
-} = require("../Middlewares/watch-later");
-const { postHistory, deleteHistory } = require("../Middlewares/history");
+} = require("../Controllers/watch-later");
+const { postHistory, deleteHistory } = require("../Controllers/history");
 const {
   createNewPlaylist,
   deletePlaylist,
   postUpdatePlaylist,
   deleteUpdatePlaylist,
-} = require("../Middlewares/playlist");
+} = require("../Controllers/playlist");
 
 const {
   getUserbyId,
   getUserDetails,
   updateUser,
-} = require("../Middlewares/user");
+} = require("../Controllers/user");
 router.route("/signup").post(signup);
 
 router.route("/login").post(login);
