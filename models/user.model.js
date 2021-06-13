@@ -1,5 +1,4 @@
 const mongoose = require('mongoose');
-require('mongoose-type-url')
 const Schema = mongoose.Schema;
 const userSchema = new Schema({
   id: Schema.Types.ObjectId,

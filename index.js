@@ -1,13 +1,12 @@
 const express = require('express');
-const mongoose = require('mongoose');
 const cors = require('cors');
-const bodyParser = require('body-parser')
 const userRoute = require('./routes/user.router')
+const videoRoute = require('./routes/video.router')
 const notFound = require('./errorHandlers/routeNotFound')
 const errorOccered = require('./errorHandlers/errorOccered')
 require("dotenv").config();
 const app = express();
-app.use(bodyParser.json());
+app.use(express.json());
 app.use(cors());
 
 const { initialzeDBConnection } = require('./db/db')
@@ -18,6 +17,7 @@ app.get('/', (request, response) => {
 });
 
 app.use('/user',userRoute)
+app.use('/video',videoRoute)
 app.use(notFound)
 app.use(errorOccered)
 
